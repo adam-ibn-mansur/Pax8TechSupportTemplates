@@ -35,10 +35,6 @@ migrationStart() {
     return
 }
 
-;;Unresolved Threats Function
-;;This function prompts the user to provide the customer name, but to also add the list of devices unresolved threats to that middle of the message where prompted.
-;;I would make this a looping algorithm of some sort where the user also puts in the computer names, but that might take more time than just copying and pasting from the
-;;Activity tab in the Management Client.
 unresolvedThreats()
 {
   InputBox, specName, Name of Customer, Please input name of customer:
@@ -46,13 +42,57 @@ unresolvedThreats()
   (
   Hello, %specName%,
 
-  We have initiated all of the endpoints onto the new management console, and you should see these populate shortly.
+  We have migrated all possible account endpoints onto the new management console, and you should see these populate shortly.
 
-  There were endpoints that did not migrate due to unresolved threats, which will be provided below, and will need to be resolved:
+  However, due to unresolved threats, the following device(s) could not be migrated:
 
   [PLACE LIST OF DEVICES WITH UNRESOLVED THREATS HERE]
 
-  Please let us know when these threats have been resolved, and we will reattempt the endpoint migration again.
+  Please let us know when these threats have been resolved, and we will reattempt the endpoint migration.
+  )
+  Sleep, 250
+  BlockInput, On
+  Send, %msg%
+  BlockInput, Off
+  return
+}
+
+outdatedSoftware()
+{
+  InputBox, specName, Name of Customer, Please input name of customer:
+  msg=
+  (
+  Hello, %specName%,
+  
+  We have migrated all possible account endpoints onto the new management console, and you should see these populate shortly.
+
+  However, due to an outdated version of SentinelOne that must to be updated, the following devices could not be migrated:
+
+  [PLACE LIST OF OUTDATED S1 DEVICES HERE]
+
+  Please let us know when SentinelOne on these devices have been updated to the latest version, and we will reattempt the endpoint migration.
+  )
+  Sleep, 250
+  BlockInput, On
+  Send, %msg%
+  BlockInput, Off
+  return
+}
+
+inactiveDevice()
+{
+  InputBox, specName, Name of Customer, Please input name of customer:
+  msg=
+  (
+  Hello, %specName%,
+  
+  We have migrated all possible account endpoints onto the new management console, and you should see these populate shortly.
+
+  However, due to prolonged device inactivity, the following devices could not be migrated:
+
+  [PLACE LIST OF INACTIVE DEVICES HERE]
+
+  Please let us know if these devices can and have been turned on again, and we will reattempt the endpoint migration; otherwise you will need to decommission them on your end in the SentinelOne management console.
   )
   Sleep, 250
   BlockInput, On
